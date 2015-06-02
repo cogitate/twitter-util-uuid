@@ -28,8 +28,8 @@ trait Sink {
     longVal: Long = Event.NoLong,
     objectVal: Object = Event.NoObject,
     doubleVal: Double = Event.NoDouble,
-    traceIdVal: Long = Event.NoTraceId,
-    spanIdVal: Long = Event.NoSpanId
+    traceIdVal: String = Event.NoTraceId,
+    spanIdVal: String = Event.NoSpanId
   ): Unit
 
   /**
@@ -55,8 +55,8 @@ object Sink {
       longVal: Long,
       objectVal: Object,
       doubleVal: Double,
-      traceIdVal: Long,
-      spanIdVal: Long
+      traceIdVal: String,
+      spanIdVal: String
     ): Unit = ()
 
     override def events: Iterator[Event] = Iterator.empty
@@ -68,7 +68,7 @@ object Sink {
   def of(buffer: scala.collection.mutable.Buffer[Event]): Sink =
     new Sink {
       def events = buffer.iterator
-      def event(e: Event.Type, l: Long, o: Object, d: Double, t: Long, s: Long) =
+      def event(e: Event.Type, l: Long, o: Object, d: Double, t: String, s: String) =
         buffer += Event(e, com.twitter.util.Time.now, l, o, d, t, s)
     }
 

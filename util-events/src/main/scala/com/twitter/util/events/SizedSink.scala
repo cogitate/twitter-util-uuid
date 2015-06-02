@@ -38,8 +38,8 @@ object SizedSink {
       var longVal: Long,
       var objectVal: Object,
       var doubleVal: Double,
-      var traceIdVal: Long,
-      var spanIdVal: Long)
+      var traceIdVal: String,
+      var spanIdVal: String)
   {
     def isDefined: Boolean = etype != null
 
@@ -94,8 +94,8 @@ class SizedSink private[events](
     longVal: Long = Event.NoLong,
     objectVal: Object = Event.NoObject,
     doubleVal: Double = Event.NoDouble,
-    traceIdVal: Long = Event.NoTraceId,
-    spanIdVal: Long = Event.NoSpanId
+    traceIdVal: String = Event.NoTraceId,
+    spanIdVal: String = Event.NoSpanId
   ): Unit = {
     require(etype != null)
 
