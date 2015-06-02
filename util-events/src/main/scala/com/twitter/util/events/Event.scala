@@ -11,8 +11,8 @@ object Event {
   val NoObject: AnyRef = new Object()
   val NoLong: Long = Long.MinValue
   val NoDouble: Double = Double.NegativeInfinity
-  val NoTraceId: Long = Long.MinValue
-  val NoSpanId: Long = Long.MinValue
+  val NoTraceId: String = ""
+  val NoSpanId: String = ""
 
   /**
    * Represents a type of event that can be recorded.
@@ -40,7 +40,7 @@ object Event {
      */
     def deserialize(buf: Buf): Try[Event]
 
-    protected def serializeTrace(traceId: Long, spanId: Long): (Option[Long], Option[Long]) = {
+    protected def serializeTrace(traceId: String, spanId: String): (Option[String], Option[String]) = {
       val sid = if (spanId == NoSpanId) None else Some(spanId)
       val tid = if (traceId == NoTraceId) None else Some(traceId)
       (tid, sid)
@@ -73,8 +73,8 @@ case class Event(
     longVal: Long = Event.NoLong,
     objectVal: Object = Event.NoObject,
     doubleVal: Double = Event.NoDouble,
-    traceIdVal: Long = Event.NoTraceId,
-    spanIdVal: Long = Event.NoSpanId) {
+    traceIdVal: String = Event.NoTraceId,
+    spanIdVal: String = Event.NoSpanId) {
 
   def getLong: Option[Long] =
     if (Event.NoLong == longVal) None else Some(longVal)
@@ -85,9 +85,9 @@ case class Event(
   def getDouble: Option[Double] =
     if (Event.NoDouble == doubleVal) None else Some(doubleVal)
 
-  def getTraceId: Option[Long] =
+  def getTraceId: Option[String] =
     if (Event.NoTraceId == traceIdVal) None else Some(traceIdVal)
 
-  def getSpanId: Option[Long] =
+  def getSpanId: Option[String] =
     if (Event.NoSpanId == spanIdVal) None else Some(spanIdVal)
 }
